@@ -1,5 +1,8 @@
-# Segmentation Annotator by UEA
+# Segmentation Annotator
 This repository is a fork of a project released [here](https://bitbucket.org/ueacomputervision/image-labelling-tool).
+The original originals are Geoffrey French, Dr. M. Fisher and Dr. M. Mackiewicz at University of East Anglia.
+
+The code is modified to work better with SLIC initialization.
 
 ## Installation
 

@@ -27,6 +27,7 @@ import json
 from matplotlib import pyplot as plt
 import numpy as np
 import os
+import yaml
 
 from flask import Flask, render_template, request, make_response, send_from_directory
 
@@ -44,7 +45,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # `LabelClass` parameters are: symbolic name, human readable name for UI, and RGB colour as list
-    label_names = args.label_names
+    with open(args.label_names, 'r') as f:
+        label_names = yaml.load(f)
+
     cmap = plt.get_cmap('spectral')
     colors = [(np.array(cmap(i)[:3]) * 255).astype(np.int32).tolist()
               for i in range(1, len(label_names) + 1)]

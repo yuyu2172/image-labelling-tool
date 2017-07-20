@@ -1,4 +1,36 @@
-# UEA Computer Vision - Image Labelling Tool
+This repository is a fork of a project released [here](https://bitbucket.org/ueacomputervision/image-labelling-tool).
+
+
+# How to use
+
+## Installation
+
+```
+$ pip install -e .
+```
+
+
+## Usage
+
+```
+# This starts up interactive annotator.
+# If slic option is supplied, it starts with precomputed segmentations based on SLIC.
+$ python flask_app.py [--slic] [--image_dir PATH_TO_DIR] [--label_names label_names.yml]
+
+# Convert annotated json to labels
+$ python convert_json_to_label.py [--image_dir PATH_TO_DIR] [--label_names label_names.yml]
+```
+
+
+## Example
+
+```
+$ python flask_app.py --slic --image_dir images --label_names label_names_example.yml
+$ python convert_json_to_label.py --image_dir images --label_names label_names_example.yml
+```
+
+
+# (Original README starts here) UEA Computer Vision - Image Labelling Tool
 
 #### A light-weight image labelling tool for Python designed for creating segmentation datasets.
 

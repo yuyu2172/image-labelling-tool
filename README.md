@@ -1,7 +1,5 @@
+# Segmentation Annotator by UEA
 This repository is a fork of a project released [here](https://bitbucket.org/ueacomputervision/image-labelling-tool).
-
-
-# How to use
 
 ## Installation
 
@@ -12,7 +10,7 @@ $ pip install -e .
 
 ## Usage
 
-```
+```bash
 # This starts up interactive annotator.
 # If slic option is supplied, it starts with precomputed segmentations based on SLIC.
 $ python flask_app.py [--slic] [--image_dir PATH_TO_DIR] [--label_names label_names.yml]
@@ -24,10 +22,12 @@ $ python convert_json_to_label.py [--image_dir PATH_TO_DIR] [--label_names label
 
 ## Example
 
-```
+```bash
 $ python flask_app.py --slic --image_dir images --label_names label_names_example.yml
 $ python convert_json_to_label.py --image_dir images --label_names label_names_example.yml
 ```
+
+![](https://github.com/yuyu2172/segmentation-annotator/blob/master/screenshot.png)
 
 
 # (Original README starts here) UEA Computer Vision - Image Labelling Tool

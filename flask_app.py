@@ -24,30 +24,46 @@
 # Dr. M. Mackiewicz.
 import argparse
 import json
+from matplotlib import pyplot as plt
+import numpy as np
+import os
 
 from flask import Flask, render_template, request, make_response, send_from_directory
 
 from image_labelling_tool import labelling_tool
 
+
+FILE_EXT = '.jpg'
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Image labelling tool - Flask app')
     parser.add_argument('--slic', action='store_true', help='Use SLIC segmentation to generate initial labels')
     parser.add_argument('--readonly', action='store_true', help='Don\'t persist changes to disk')
+    parser.add_argument('--image_dir')
+    parser.add_argument('--label_names')
     args = parser.parse_args()
 
-    # Specify our 3 label classes.
     # `LabelClass` parameters are: symbolic name, human readable name for UI, and RGB colour as list
-    label_classes = [labelling_tool.LabelClass('tree', 'Trees', [0, 255, 192]),
-                     labelling_tool.LabelClass('building', 'Buldings', [255, 128, 0]),
-                     labelling_tool.LabelClass('lake', 'Lake', [0, 128, 255]),
-                     ]
+    label_names = args.label_names
+    cmap = plt.get_cmap('spectral')
+    colors = [(np.array(cmap(i)[:3]) * 255).astype(np.int32).tolist()
+              for i in range(1, len(label_names) + 1)]
+    label_classes = [labelling_tool.LabelClass(name, name, color)
+                     for color, name in zip(colors, label_names)]
+
+    img_dir = args.image_dir
     if args.slic:
         import glob
-        from matplotlib import pyplot as plt
         from skimage.segmentation import slic
 
-        labelled_images = []
-        for path in glob.glob('images/*.jpg'):
+        for path in glob.glob(os.path.join(img_dir, '*{}'.format(FILE_EXT))):
+            name = os.path.splitext(path)[0]
+            out_name = name + '__labels.json'
+            if os.path.exists(out_name):
+                print('Label already exits at {}'.format(out_name))
+                # raise ValueError
+                continue
+
             print 'Segmenting {0}'.format(path)
             img = plt.imread(path)
             # slic_labels = slic(img, 1000, compactness=20.0)
@@ -56,23 +72,20 @@ if __name__ == '__main__':
             print 'Converting SLIC labels to vector labels...'
             labels = labelling_tool.ImageLabels.from_label_image(slic_labels)
 
-            limg = labelling_tool.LabelledImageFile(path, labels)
-            labelled_images.append(limg)
+            with open(out_name, 'w') as f:
+                json.dump(labels.labels_json, f)
 
-        print 'Segmented {0} images'.format(len(labelled_images))
-    else:
-        readonly = args.readonly
-        # Load in .JPG images from the 'images' directory.
-        labelled_images = labelling_tool.PersistentLabelledImage.for_directory('images', image_filename_pattern='*.jpg',
-                                                                               readonly=readonly)
-        print 'Loaded {0} images'.format(len(labelled_images))
-
-
+    readonly = args.readonly
+    # Load in .JPG images from the 'images' directory.
+    labelled_images = labelling_tool.PersistentLabelledImage.for_directory(
+        img_dir, image_filename_pattern='*{}'.format(FILE_EXT),
+        readonly=readonly)
+    print 'Loaded {0} images'.format(len(labelled_images))
 
     # Generate image IDs list
-    image_ids = [str(i)   for i in xrange(len(labelled_images))]
+    image_ids = [str(i) for i in xrange(len(labelled_images))]
     # Generate images table mapping image ID to image so we can get an image by ID
-    images_table = {image_id: img   for image_id, img in zip(image_ids, labelled_images)}
+    images_table = {image_id: img for image_id, img in zip(image_ids, labelled_images)}
     # Generate image descriptors list to hand over to the labelling tool
     # Each descriptor provides the image ID, the URL and the size
     image_descriptors = []
@@ -83,10 +96,7 @@ if __name__ == '__main__':
             width=width, height=height
         ))
 
-
     app = Flask(__name__, static_folder='image_labelling_tool/static')
-
-
     config = {
         'tools': {
             'imageSelector': True,
@@ -156,4 +166,5 @@ if __name__ == '__main__':
         return send_from_directory(app.root_path + '/ext_static/', filename)
 
 
-    app.run(debug=True)
+    # app.run(debug=True)
+    app.run(debug=False)

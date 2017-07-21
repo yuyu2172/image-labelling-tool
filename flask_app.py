@@ -34,7 +34,7 @@ from flask import Flask, render_template, request, make_response, send_from_dire
 from image_labelling_tool import labelling_tool
 
 
-FILE_EXT = '.jpg'
+FILE_EXT = '.png'
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Image labelling tool - Flask app')

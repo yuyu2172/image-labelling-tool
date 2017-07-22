@@ -34,15 +34,16 @@ from flask import Flask, render_template, request, make_response, send_from_dire
 from image_labelling_tool import labelling_tool
 
 
-FILE_EXT = '.png'
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Image labelling tool - Flask app')
     parser.add_argument('--slic', action='store_true', help='Use SLIC segmentation to generate initial labels')
     parser.add_argument('--readonly', action='store_true', help='Don\'t persist changes to disk')
     parser.add_argument('--image_dir')
     parser.add_argument('--label_names')
+    parser.add_argument('--file_ext', type=str, default='png')
     args = parser.parse_args()
+
+    file_ext = '.{}'.format(args.file_ext)
 
     # `LabelClass` parameters are: symbolic name, human readable name for UI, and RGB colour as list
     with open(args.label_names, 'r') as f:
@@ -59,7 +60,7 @@ if __name__ == '__main__':
         import glob
         from skimage.segmentation import slic
 
-        for path in glob.glob(os.path.join(img_dir, '*{}'.format(FILE_EXT))):
+        for path in glob.glob(os.path.join(img_dir, '*{}'.format(file_ext))):
             name = os.path.splitext(path)[0]
             out_name = name + '__labels.json'
             if os.path.exists(out_name):
@@ -82,7 +83,7 @@ if __name__ == '__main__':
     readonly = args.readonly
     # Load in .JPG images from the 'images' directory.
     labelled_images = labelling_tool.PersistentLabelledImage.for_directory(
-        img_dir, image_filename_pattern='*{}'.format(FILE_EXT),
+        img_dir, image_filename_pattern='*{}'.format(file_ext),
         readonly=readonly)
     print 'Loaded {0} images'.format(len(labelled_images))
 

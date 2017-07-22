@@ -10,19 +10,19 @@ from flask import Flask, render_template, request, make_response, send_from_dire
 from image_labelling_tool import labelling_tool
 
 
-FILE_EXT = '.png'
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Image labelling tool - Convert Json to Image')
     parser.add_argument('--image_dir')
     parser.add_argument('--label_names')
+    parser.add_argument('--file_ext', type=str, default='png')
     args = parser.parse_args()
+    file_ext = '.{}'.format(args.file_ext)
     img_dir = args.image_dir
     with open(args.label_names, 'r') as f:
         label_names = yaml.load(f)
 
     labelled_images = labelling_tool.PersistentLabelledImage.for_directory(
-        img_dir, image_filename_pattern='*{}'.format(FILE_EXT))
+        img_dir, image_filename_pattern='*{}'.format(file_ext))
 
     for labelled_image in labelled_images:
         if labelled_image.labels is not None:

@@ -794,7 +794,7 @@ class PersistentLabelledImage (AbsractLabelledImage):
     @classmethod
     def for_directory(cls, dir_path, image_filename_pattern='*.png', with_labels_only=False,
                       labels_dir=None, readonly=False):
-        image_paths = glob.glob(os.path.join(dir_path, image_filename_pattern))
+        image_paths = sorted(glob.glob(os.path.join(dir_path, image_filename_pattern)))
         if with_labels_only:
             return [PersistentLabelledImage(img_path, labels_dir=labels_dir, readonly=readonly)
                     for img_path in image_paths

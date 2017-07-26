@@ -26,9 +26,12 @@ $ python convert_json_to_label.py [--image_dir PATH_TO_DIR] [--label_names label
 ## Example
 
 ```bash
-$ python flask_app.py --slic --image_dir images --label_names label_names_example.yml
-$ python convert_json_to_label.py --image_dir images --label_names label_names_example.yml
+$ python flask_app.py --image_dir examples/simple/images --label_names examples/simple/label_names_example.yml --file_ext jpg
+$ python convert_json_to_label.py --image_dir examples/simple/images --label_names examples/simple/label_names_example.yml
 ```
+
+If you want to initialize an image with superpixel initialization, use `--slic` option.
+Please use `--file_ext` to specify the file extension of images.
 
 ![](https://github.com/yuyu2172/segmentation-annotator/blob/master/screenshot.png)
 

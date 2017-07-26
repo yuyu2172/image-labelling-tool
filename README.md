@@ -5,11 +5,9 @@ The original originals are Geoffrey French, Dr. M. Fisher and Dr. M. Mackiewicz 
 The code is modified to work better with SLIC initialization.
 
 ## Installation
-
 ```
 $ pip install -e .
 ```
-
 
 ## Usage
 
@@ -25,6 +23,8 @@ $ python convert_json_to_label.py [--image_dir PATH_TO_DIR] [--label_names label
 
 ## Example
 
+#### Annotation
+
 ```bash
 $ python flask_app.py --image_dir examples/simple/images --label_names examples/simple/label_names_example.yml --file_ext jpg
 $ python convert_json_to_label.py --image_dir examples/simple/images --label_names examples/simple/label_names_example.yml
@@ -34,6 +34,16 @@ If you want to initialize an image with superpixel initialization, use `--slic` 
 Please use `--file_ext` to specify the file extension of images.
 
 ![](https://github.com/yuyu2172/segmentation-annotator/blob/master/screenshot.png)
+
+
+#### Full example to train an object detection model with annotated dataset
+In the examples, there is a training script for SSD that uses dataset that is created by this annotation tool.
+SSD is one of the state of the art deep learning based object detection model.
+
+The implementation uses ChainerCV, a computer vision library.
+The library is created to lower the barrier of entry to use deep learning based computer vision models.
+
+The more details can be found at `examples/ssd`.
 
 
 # (Original README starts here) UEA Computer Vision - Image Labelling Tool

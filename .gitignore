@@ -1,3 +1,5 @@
 *.egg-info/
 *.pyc
 
+examples/ssd/data/
+examples/ssd/models/

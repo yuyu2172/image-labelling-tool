@@ -13,20 +13,27 @@ class OriginalDetectionDataset(chainer.dataset.DatasetMixin):
         self.label_names = label_names
 
         self.img_filenames = []
-        for name in sorted(os.listdir(data_dir)):
-            # If the file is not an image, ignore the file.
-            if os.path.splitext(name)[1] != '.jpg':
-                continue
-            self.img_filenames.append(os.path.join(data_dir, name))
+        self.anno_filenames = []
+        # for name in sorted(os.listdir(data_dir)):
+        for root, dirs, files in os.walk(data_dir):
+            for name in sorted(files):
+                # If the file is not an image, ignore the file.
+                if os.path.splitext(name)[1] != '.jpg':
+                    continue
+                img_filename = os.path.join(root, name)
+                anno_filename = os.path.splitext(img_filename)[0] + '__labels.json'
+                if not os.path.exists(anno_filename):
+                    continue
+                self.img_filenames.append(img_filename)
+                self.anno_filenames.append(anno_filename)
 
     def __len__(self):
         return len(self.img_filenames)
 
     def get_example(self, i):
         img_filename = self.img_filenames[i]
+        anno_filename = self.anno_filenames[i]
         img = read_image(img_filename)
-
-        anno_filename = os.path.splitext(img_filename)[0] + '__labels.json'
 
         with open(anno_filename, 'r') as f:
             anno = json.load(f)
@@ -41,9 +48,9 @@ class OriginalDetectionDataset(chainer.dataset.DatasetMixin):
             center_x = anno_i['centre']['x']
 
             if anno_i['label_class'] not in self.label_names:
-                l = len(self.label_names) - 1
-            else:
-                l = self.label_names.index(anno_i['label_class'])
+                raise ValueError(
+                    'The class does not exist {}'.format(anno_i['label_class']))
+            l = self.label_names.index(anno_i['label_class'])
             bbox.append(
                 [center_y - h / 2, center_x - w / 2,
                  center_y + h / 2, center_x + w / 2])

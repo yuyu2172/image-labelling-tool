@@ -1,6 +1,8 @@
 import argparse
 import yaml
 
+import chainer
+
 from original_detection_dataset import OriginalDetectionDataset
 from train_utils import train
 
@@ -8,11 +10,13 @@ from train_utils import train
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        'train', help='The root directory of the training dataset')
+        '--train', help='The root directory of the training dataset')
     parser.add_argument(
-        'val', help='The root directory of the validation dataset')
+        '--val',
+        help='The root directory of the validation dataset. If this is not '
+        'supplied, the data for train dataset is split into two with ratio 8:2.')
     parser.add_argument(
-        'label_names', help='The path to the yaml file with label names')
+        '--label_names', help='The path to the yaml file with label names')
     parser.add_argument(
         '--iteration', type=int, default=120000,
         help='The number of iterations to run until finishing the train loop')
@@ -41,8 +45,15 @@ if __name__ == '__main__':
     with open(args.label_names, 'r') as f:
         label_names = tuple(yaml.load(f))
 
-    train_data = OriginalDetectionDataset(args.train, label_names)
-    val_data = OriginalDetectionDataset(args.val, label_names)
+    if args.val is None:
+        train_data = OriginalDetectionDataset(args.train, label_names)
+        val_data = OriginalDetectionDataset(args.val, label_names)
+    else:
+        # If --val is not supplied, the train data is split into two
+        # with ratio 8:2.
+        dataset = OriginalDetectionDataset(args.train, label_names)
+        train_data, val_data = chainer.datasets.split_dataset_random(
+            dataset, int(len(dataset) * 0.8))
 
     step_points = [args.step_size]
     train(

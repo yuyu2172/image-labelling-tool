@@ -81,3 +81,29 @@ This script divides all data in `DATA_DIR` into `TRAIN_DIR` and `VAL_DIR`.
 
 Example usage:
 `python randomly_split_directory.py TRAIN_DIR VAL_DIR DATA_DIR`
+
+
+### Example
+
+In order to try these scripts without annotating images, a sample annotations are provided.
+They are bounding box annotations around an orange or an apple.
+
+It can be downloaded from here.
+https://drive.google.com/open?id=0BzBTxmVQJTrGek9ISlNmU2RkTk0
+
+Unzip the compressed file.
+```bash
+# Download the file at the current directory.
+$ unzip apple_orange_annotations.zip
+```
+
+Run train code
+```bash
+$ python train.py --train apple_orange_annotations --label_names apple_orange_annotations/apple_orange_label_names.yml --val_iteration 100 --gpu GPU
+```
+
+You can also fix the validation data.
+```bash
+$ python randomly_split_directory.py train val apple_orange_annotations
+$ python train.py --train train --val val --label_names apple_orange_annotations/apple_orange_label_names.yml --val_iteration 100  --gpu GPU
+```

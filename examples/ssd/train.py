@@ -45,7 +45,7 @@ if __name__ == '__main__':
     with open(args.label_names, 'r') as f:
         label_names = tuple(yaml.load(f))
 
-    if args.val is None:
+    if args.val is not None:
         train_data = OriginalDetectionDataset(args.train, label_names)
         val_data = OriginalDetectionDataset(args.val, label_names)
     else:

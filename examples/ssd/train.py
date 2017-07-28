@@ -14,8 +14,10 @@ if __name__ == '__main__':
     parser.add_argument(
         'label_names', help='The path to the yaml file with label names')
     parser.add_argument(
-        '--iteration', type=int, default=10000,
+        '--iteration', type=int, default=120000,
         help='The number of iterations to run until finishing the train loop')
+    parser.add_argument(
+        '--lr', type=float, default=1e-4, help='Initial learning rate')
     parser.add_argument(
         '--step_size', type=int, default=-1,
         help='The number of iterations to run before '
@@ -27,6 +29,9 @@ if __name__ == '__main__':
         '--gpu', type=int, default=-1, help='GPU ID')
     parser.add_argument('--out', default='result',
                         help='The directory in which logs are saved')
+    parser.add_argument(
+        '--val_iteration', type=int, default=10000,
+        help='The number of iterations between every validation.')
     parser.add_argument(
         '--resume',
         help='The path to the trainer snapshot to resume from. '
@@ -45,8 +50,10 @@ if __name__ == '__main__':
         val_data,
         label_names,
         args.iteration,
+        args.lr,
         step_points,
         args.batchsize,
         args.gpu,
         args.out,
+        args.val_iteration,
         args.resume)

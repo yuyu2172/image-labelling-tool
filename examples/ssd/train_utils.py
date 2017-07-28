@@ -99,15 +99,17 @@ class Transform(object):
 
 
 def train(train_data, val_data, label_names,
-          iteration, step_points,
-          batchsize, gpu, out,
+          iteration, lr, step_points,
+          batchsize, gpu, out, val_iteration,
           resume):
     """Train SSD
 
     """
-    model = SSD300(
-        n_fg_class=len(label_names),
-        pretrained_model='imagenet')
+    pretrained_model = SSD300(
+        pretrained_model='voc0712')
+    model = SSD300(n_fg_class=len(label_names))
+    model.extractor.copyparams(pretrained_model.extractor)
+    model.multibox.loc.copyparams(pretrained_model.multibox.loc)
     model.use_preset('evaluate')
     train_chain = MultiboxTrainChain(model)
     if gpu >= 0:
@@ -117,7 +119,8 @@ def train(train_data, val_data, label_names,
     train_data = TransformDataset(
         train_data,
         Transform(model.coder, model.insize, model.mean))
-    train_iter = chainer.iterators.MultiprocessIterator(train_data, batchsize)
+    train_iter = chainer.iterators.MultiprocessIterator(
+        train_data, batchsize)
     val_iter = chainer.iterators.SerialIterator(
         val_data, batchsize, repeat=False, shuffle=False)
 
@@ -133,10 +136,10 @@ def train(train_data, val_data, label_names,
     updater = training.StandardUpdater(train_iter, optimizer, device=gpu)
     trainer = training.Trainer(updater, (iteration, 'iteration'), out)
     trainer.extend(
-        extensions.ExponentialShift('lr', 0.1, init=1e-3),
+        extensions.ExponentialShift('lr', 0.1, init=lr),
         trigger=triggers.ManualScheduleTrigger(step_points, 'iteration'))
 
-    val_interval = (iteration / 10, 'iteration')
+    val_interval = (val_iteration, 'iteration')
     trainer.extend(
         DetectionVOCEvaluator(
             val_iter, model, use_07_metric=True,
@@ -156,7 +159,7 @@ def train(train_data, val_data, label_names,
     trainer.extend(extensions.snapshot(), trigger=val_interval)
     trainer.extend(
         extensions.snapshot_object(model, 'model_iter_{.updater.iteration}'),
-        trigger=(iteration, 'iteration'))
+        trigger=val_interval)
 
     if resume:
         serializers.load_npz(resume, trainer)

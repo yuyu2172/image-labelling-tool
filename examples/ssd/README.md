@@ -85,7 +85,7 @@ Example usage:
 
 ### Example
 
-In order to try these scripts without annotating images, a sample annotations are provided.
+In order to try these scripts without annotating images, sample annotations are provided.
 They are bounding box annotations around an orange or an apple.
 
 It can be downloaded from here.
@@ -93,7 +93,7 @@ https://drive.google.com/open?id=0BzBTxmVQJTrGek9ISlNmU2RkTk0
 
 Unzip the compressed file.
 ```bash
-# Download the file at the current directory.
+# Download the file in the current directory.
 $ unzip apple_orange_annotations.zip
 ```
 

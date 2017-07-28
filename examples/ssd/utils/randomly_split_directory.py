@@ -11,7 +11,10 @@ def main():
     parser.add_argument('train_dir', default='train')
     parser.add_argument('val_dir', default='val')
     parser.add_argument('data_dirs', nargs='*')
+    parser.add_argument('--seed', type=int, default=0)
     args = parser.parse_args()
+
+    np.random.seed(args.seed)
 
     filename_tuples = []
     for data_dir in args.data_dirs:

@@ -1,4 +1,4 @@
-# Segmentation Annotator
+# Image Labelling Tool
 This repository is a fork of a project released [here](https://bitbucket.org/ueacomputervision/image-labelling-tool).
 The original originals are Geoffrey French, Dr. M. Fisher and Dr. M. Mackiewicz at University of East Anglia.
 
@@ -10,7 +10,6 @@ $ pip install -e .
 ```
 
 ## Usage
-
 ```bash
 # This starts up interactive annotator.
 # If slic option is supplied, it starts with precomputed segmentations based on SLIC.
@@ -19,7 +18,6 @@ $ python flask_app.py [--slic] [--image_dir PATH_TO_DIR] [--label_names label_na
 # Convert annotated json to labels
 $ python convert_json_to_label.py [--image_dir PATH_TO_DIR] [--label_names label_names.yml]
 ```
-
 
 ## Example
 
@@ -33,7 +31,7 @@ $ python convert_json_to_label.py --image_dir examples/simple/images --label_nam
 If you want to initialize an image with superpixel initialization, use `--slic` option.
 Please use `--file_ext` to specify the file extension of images.
 
-![](https://github.com/yuyu2172/segmentation-annotator/blob/master/screenshot.png)
+![](https://github.com/yuyu2172/image-labelling-tool/blob/master/examples/simple/screenshot.png)
 
 
 #### Full example to train an object detection model with annotated dataset
@@ -43,7 +41,7 @@ SSD is one of the state of the art deep learning based object detection model.
 The implementation uses ChainerCV, a computer vision library.
 The library is created to lower the barrier of entry to use deep learning based computer vision models.
 
-The more details can be found in `examples/ssd`.
+The more details can be found in [`examples/ssd`](https://github.com/yuyu2172/image-labelling-tool/tree/master/examples/ssd).
 
 
 # (Original README starts here) UEA Computer Vision - Image Labelling Tool

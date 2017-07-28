@@ -43,7 +43,7 @@ SSD is one of the state of the art deep learning based object detection model.
 The implementation uses ChainerCV, a computer vision library.
 The library is created to lower the barrier of entry to use deep learning based computer vision models.
 
-The more details can be found at `examples/ssd`.
+The more details can be found in `examples/ssd`.
 
 
 # (Original README starts here) UEA Computer Vision - Image Labelling Tool

@@ -1,42 +1,51 @@
+import argparse
 import os
+import warnings
 import shutil
 
 import numpy as np
 
 
-if __name__ == '__main__':
-    filenames = []
-    data_dir = 'data'
-    train_dir = 'train'
-    val_dir = 'val'
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('train_dir', default='train')
+    parser.add_argument('val_dir', default='val')
+    parser.add_argument('data_dirs', nargs='*')
+    args = parser.parse_args()
 
-    for img_name in os.listdir(data_dir):
-        if os.path.splitext(img_name)[1] == '.jpg':
-            name = os.path.splitext(img_name)[0]
-            tup = (os.path.join(data_dir, img_name),
-                   os.path.join(data_dir, name + '__labels.json'))
-            filenames.append(tup)
-    
-    if os.path.exists(train_dir):
-        raise ValueError('directory train already exists')
-    os.makedirs(train_dir)
+    filename_tuples = []
+    for data_dir in args.data_dirs:
+        for img_name in os.listdir(data_dir):
+            if os.path.splitext(img_name)[1] == '.jpg':
+                name = os.path.splitext(img_name)[0]
+                tup = (os.path.join(data_dir, img_name),
+                    os.path.join(data_dir, name + '__labels.json'))
+                filename_tuples.append(tup)
 
-    if os.path.exists(val_dir):
-        raise ValueError('directory val already exists')
-    os.makedirs(val_dir)
+    if os.path.exists(args.train_dir):
+        warnings.warn('directory train already exists')
+    os.makedirs(args.train_dir)
 
-    order = np.arange(len(filenames))
+    if os.path.exists(args.val_dir):
+        warnings.warn('directory train already exists')
+    os.makedirs(args.val_dir)
+
+    order = np.arange(len(filename_tuples))
     np.random.shuffle(order)
     first_size = int(len(order) * 0.8)
-    
+
     for i in order[:first_size]:
-        tup = filenames[i]
+        tup = filename_tuples[i]
         for filename in tup:
             name = os.path.split(filename)[1]
-            shutil.copyfile(filename, os.path.join(train_dir, name))
+            shutil.copyfile(filename, os.path.join(args.train_dir, name))
 
     for i in order[first_size:]:
-        tup = filenames[i]
+        tup = filename_tuples[i]
         for filename in tup:
             name = os.path.split(filename)[1]
-            shutil.copyfile(filename, os.path.join(val_dir, name))
+            shutil.copyfile(filename, os.path.join(args.val_dir, name))
+
+
+if __name__ == '__main__':
+    main()

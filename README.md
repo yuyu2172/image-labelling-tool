@@ -3,6 +3,7 @@ This repository is a fork of a project released [here](https://bitbucket.org/uea
 The original originals are Geoffrey French, Dr. M. Fisher and Dr. M. Mackiewicz at University of East Anglia.
 
 The code is modified to work better with SLIC initialization.
+Also, this repository provides a complete example to train an object detection model with annotated data.
 
 ## Installation
 ```

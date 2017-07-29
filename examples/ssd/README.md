@@ -5,7 +5,7 @@ This example provides following functionalities.
 
 + (Annotating dataset for detection task. This is the functionality supported by this tool.)
 + A data loader object that wraps annotated data, and conveniently access data using Python.
-+ SSD training script that works with the data loader.
++ A SSD training script that works with the data loader.
 
 
 ### Dependency
@@ -30,7 +30,7 @@ $ python flask_app.py --image_dir DATA_DIR --label_names LABEL_FILE --file_ext E
 2. Train SSD
 
 This script assumes data stored in the annotation style of this annotation tool.
-This means that you do not need to write any data loader code by yourself.
+Thanks to that, you do not need to write any data loader code by yourself.
 
 ```bash
 python train.py --train DATA_DIR --label_names LABEL_NAMES --gpu GPU
@@ -73,10 +73,10 @@ optional arguments:
 When calling `train.py` without supplying `--val`, the dataset is split into two with ratio 8:2.
 The larger one is used as the training dataset and the smaller one is used as the validation dataset.
 
-Since the validation dataset is randomly split, it can be better to fix the split.
-You can use fixed split by supplying both `--train` and `--val` when calling `train.py`.
+There can be a situation when the validation dataset is created from a fixed split.
+You can use fixed split during training by supplying both `--train` and `--val` when calling `train.py`.
 
-In that case, you can use a convenient script `randomly_split_directory.py`.
+In order to split data in fixed manner, there is a convenient script `randomly_split_directory.py`.
 This script divides all data in `DATA_DIR` into `TRAIN_DIR` and `VAL_DIR`.
 
 Example usage:
@@ -86,23 +86,22 @@ Example usage:
 ### Example
 
 In order to try these scripts without annotating images, sample annotations are provided.
-They are bounding box annotations around an orange or an apple.
-
+Each annotation contains a bounding box around an orange or an apple.
 It can be downloaded from here.
 https://drive.google.com/open?id=0BzBTxmVQJTrGek9ISlNmU2RkTk0
 
-Unzip the compressed file.
+##### Unzip the compressed file.
 ```bash
 # Download the file in the current directory.
 $ unzip apple_orange_annotations.zip
 ```
 
-Run train code
+##### Run train code
 ```bash
 $ python train.py --train apple_orange_annotations --label_names apple_orange_annotations/apple_orange_label_names.yml --val_iteration 100 --gpu GPU
 ```
 
-You can also fix the validation data.
+##### Alternatively, fix data used for validation
 ```bash
 $ python randomly_split_directory.py train val apple_orange_annotations
 $ python train.py --train train --val val --label_names apple_orange_annotations/apple_orange_label_names.yml --val_iteration 100  --gpu GPU

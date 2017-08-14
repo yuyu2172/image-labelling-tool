@@ -15,10 +15,10 @@ This example provides following functionalities.
 
 
 ### Process
-1. Annotate dataset (please read the README in the top of this repo)
+1. Annotate dataset (please read the [README](https://github.com/yuyu2172/image-labelling-tool) in the top of this repo)
 
-Please store all image data below `DATA_DIR`. The label names should be writtein in a YAML file locating at LABEL_NAME.
-The file extension of the images can be selected by EXT (e.g. jpg).
+Please store all image data below `DATA_DIR`. The label names should be writtein in a YAML file locating at `LABEL_NAME`.
+The file extension of the images can be selected by `EXT` (e.g. jpg).
 
 After finish annotating data,
 the annotation files are stored umder `DATA_DIR` together with the images.
@@ -36,7 +36,7 @@ Thanks to that, you do not need to write any data loader code by yourself.
 $ python train.py --train DATA_DIR --label_names LABEL_NAMES --gpu GPU
 ```
 
-More on `train.py`
+More on `train.py`.
 ```bash
 $ python train.py -h
 ```

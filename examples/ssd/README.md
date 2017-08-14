@@ -74,8 +74,6 @@ $ unzip apple_orange_annotations.zip
 
 ##### Run train code
 ```bash
-# Make sure that you have installed image-labelling-tool.
-# https://github.com/yuyu2172/image-labelling-tool
 $ python train.py --train apple_orange_annotations --label_names apple_orange_annotations/apple_orange_label_names.yml --val_iteration 100 --gpu GPU
 ```
 

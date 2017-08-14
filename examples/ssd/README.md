@@ -3,7 +3,7 @@
 
 This example provides following functionalities.
 
-+ (Annotating dataset for detection task. This is the functionality supported by this tool.)
++ (Annotating dataset for detection task. This is the functionality supported by image-labelling-tool.)
 + A data loader object that wraps annotated data, and conveniently access data using Python.
 + A SSD training script that works with the data loader.
 

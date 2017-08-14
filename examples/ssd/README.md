@@ -33,54 +33,28 @@ This script assumes data stored in the annotation style of this annotation tool.
 Thanks to that, you do not need to write any data loader code by yourself.
 
 ```bash
-python train.py --train DATA_DIR --label_names LABEL_NAMES --gpu GPU
+$ python train.py --train DATA_DIR --label_names LABEL_NAMES --gpu GPU
 ```
 
-```
+More on `train.py`
+```bash
 $ python train.py -h
-usage: train.py [-h] [--train TRAIN] [--val VAL] [--label_names LABEL_NAMES]
-                [--iteration ITERATION] [--lr LR] [--step_size STEP_SIZE]
-                [--batchsize BATCHSIZE] [--gpu GPU] [--out OUT]
-                [--val_iteration VAL_ITERATION] [--resume RESUME]
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --train TRAIN         The root directory of the training dataset
-  --val VAL             The root directory of the validation dataset. If this
-                        is not supplied, the data for train dataset is split
-                        into two with ratio 8:2.
-  --label_names LABEL_NAMES
-                        The path to the yaml file with label names
-  --iteration ITERATION
-                        The number of iterations to run until finishing the
-                        train loop
-  --lr LR               Initial learning rate
-  --step_size STEP_SIZE
-                        The number of iterations to run before dropping the
-                        learning rate by 0.1
-  --batchsize BATCHSIZE
-                        The size of batch
-  --gpu GPU             GPU ID
-  --out OUT             The directory in which logs are saved
-  --val_iteration VAL_ITERATION
-                        The number of iterations between every validation.
-  --resume RESUME       The path to the trainer snapshot to resume from. If
-                        unspecified, no snapshot will be resumed
 ```
 
 
-### Dividing dataset into train/val
+### Dividing a dataset into train/val
 When calling `train.py` without supplying `--val`, the dataset is split into two with ratio 8:2.
 The larger one is used as the training dataset and the smaller one is used as the validation dataset.
 
-There can be a situation when the validation dataset is created from a fixed split.
+There can be a situation when the train/val split should be fixed.
 You can use fixed split during training by supplying both `--train` and `--val` when calling `train.py`.
 
 In order to split data in fixed manner, there is a convenient script `randomly_split_directory.py`.
 This script divides all data in `DATA_DIR` into `TRAIN_DIR` and `VAL_DIR`.
 
-Example usage:
-`python randomly_split_directory.py TRAIN_DIR VAL_DIR DATA_DIR`
+```bash
+$ python randomly_split_directory.py TRAIN_DIR VAL_DIR DATA_DIR
+```
 
 
 ### Example

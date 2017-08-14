@@ -92,16 +92,21 @@ https://drive.google.com/open?id=0BzBTxmVQJTrGek9ISlNmU2RkTk0
 
 ##### Unzip the compressed file.
 ```bash
+$ git clone https://github.com/yuyu2172/image-labelling-tool
+$ cd image-labelling-tool/examples/ssd
 # Download the file in the current directory.
 $ unzip apple_orange_annotations.zip
 ```
 
 ##### Run train code
 ```bash
+# Make sure that you have installed image-labelling-tool.
+# https://github.com/yuyu2172/image-labelling-tool
 $ python train.py --train apple_orange_annotations --label_names apple_orange_annotations/apple_orange_label_names.yml --val_iteration 100 --gpu GPU
 ```
 
 ##### Alternatively, fix data used for validation
+[description](https://github.com/yuyu2172/image-labelling-tool/tree/master/examples/ssd#dividing-dataset-into-trainval)
 ```bash
 $ python randomly_split_directory.py train val apple_orange_annotations
 $ python train.py --train train --val val --label_names apple_orange_annotations/apple_orange_label_names.yml --val_iteration 100  --gpu GPU

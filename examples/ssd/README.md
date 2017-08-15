@@ -64,6 +64,8 @@ Each annotation contains a bounding box around an orange or an apple.
 It can be downloaded from here.
 https://drive.google.com/open?id=0BzBTxmVQJTrGek9ISlNmU2RkTk0
 
+For annotating your own dataset, please read https://github.com/yuyu2172/image-labelling-tool
+
 ##### Unzip the compressed file.
 ```bash
 $ git clone https://github.com/yuyu2172/image-labelling-tool

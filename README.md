@@ -15,7 +15,11 @@ $ pip install -e .
 # This starts up interactive annotator.
 # If slic option is supplied, it starts with precomputed segmentations based on SLIC.
 $ python flask_app.py [--slic] [--image_dir PATH_TO_DIR] [--label_names label_names.yml]
+```
 
+
+For those who want to have label images instead of raw `.json`, please use the following command.
+```bash
 # Convert annotated json to labels
 $ python convert_json_to_label.py [--image_dir PATH_TO_DIR] [--label_names label_names.yml]
 ```

@@ -85,3 +85,8 @@ $ python train.py --train apple_orange_annotations --label_names apple_orange_an
 $ python randomly_split_directory.py train val apple_orange_annotations
 $ python train.py --train train --val val --label_names apple_orange_annotations/apple_orange_label_names.yml --val_iteration 100  --gpu GPU
 ```
+
+##### Demo code to visualize output
+```bash
+$ python demo.py --pratrained_model result/model_iter_400 --label_names apple_orange_annotations/apple_orange_label_names.yml apple_orange_annotations/Orange/frame0017.jpg
+```

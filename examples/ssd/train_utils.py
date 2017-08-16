@@ -129,7 +129,7 @@ def train(train_data, val_data, label_names,
     val_iter = chainer.iterators.SerialIterator(
         val_data, batchsize, repeat=False, shuffle=False)
 
-    # initial lr is set to 1e-3 by ExponentialShift
+    # initial lr is set by ExponentialShift
     optimizer = chainer.optimizers.MomentumSGD()
     optimizer.setup(train_chain)
     for param in train_chain.params():

@@ -124,8 +124,7 @@ def train(train_data, val_data, label_names,
         train_iter = chainer.iterators.MultiprocessIterator(
             train_data, batchsize)
     else:
-        train_iter = chainer.iterators.SerialIterator(
-            train_data, 1)
+        train_iter = chainer.iterators.SerialIterator(train_data, batchsize)
     val_iter = chainer.iterators.SerialIterator(
         val_data, batchsize, repeat=False, shuffle=False)
 

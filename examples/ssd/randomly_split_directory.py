@@ -33,7 +33,7 @@ def main():
         os.makedirs(args.train_dir)
 
     if os.path.exists(args.val_dir):
-        warnings.warn('directory train already exists')
+        warnings.warn('directory val already exists')
     else:
         os.makedirs(args.val_dir)
 

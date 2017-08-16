@@ -16,9 +16,14 @@ $ pip install -e .
 # If slic option is supplied, it starts with precomputed segmentations based on SLIC.
 $ python flask_app.py [--slic] [--image_dir PATH_TO_DIR] [--label_names label_names.yml]
 ```
+SLIC option should not be set for those who only want to annotate by bounding boxes.
+The option can be helpful for segmenting an image. Please be aware the superpixel segmentation is not always perfect.
 
+The annotations will be stored in the same directory where the corresponding images exist.
+The annotaions are stored by `.json` files containing all the parameters.
 
-For those who want to have label images instead of raw `.json`, please use the following command.
+I provided a convenient script to translate raw `.json` into a label image.
+This can be helpful for annotating semantig segmentation datasets.
 ```bash
 # Convert annotated json to labels
 $ python convert_json_to_label.py [--image_dir PATH_TO_DIR] [--label_names label_names.yml]

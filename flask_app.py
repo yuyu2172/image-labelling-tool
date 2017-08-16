@@ -68,13 +68,13 @@ if __name__ == '__main__':
                 # raise ValueError
                 continue
 
-            print 'Segmenting {0}'.format(path)
+            print('Segmenting {0}'.format(path))
             img = plt.imread(path)
             # slic_labels = slic(img, 1000, compactness=20.0)
             # slic_labels = slic(img, 1000, slic_zero=True) + 1
             slic_labels = slic(img, 1500, slic_zero=True) + 1
 
-            print 'Converting SLIC labels to vector labels...'
+            print('Converting SLIC labels to vector labels...')
             labels = labelling_tool.ImageLabels.from_label_image(slic_labels)
 
             with open(out_name, 'w') as f:
@@ -85,7 +85,7 @@ if __name__ == '__main__':
     labelled_images = labelling_tool.PersistentLabelledImage.for_directory(
         img_dir, image_filename_pattern='*{}'.format(file_ext),
         readonly=readonly)
-    print 'Loaded {0} images'.format(len(labelled_images))
+    print('Loaded {0} images'.format(len(labelled_images)))
 
     # Generate image IDs list
     image_ids = [str(i) for i in xrange(len(labelled_images))]

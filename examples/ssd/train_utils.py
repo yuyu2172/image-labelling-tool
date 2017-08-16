@@ -101,6 +101,7 @@ class Transform(object):
 def train(train_data, val_data, label_names,
           iteration, lr, step_points,
           batchsize, gpu, out, val_iteration,
+          log_iteration,
           resume):
     """Train SSD
 
@@ -146,7 +147,7 @@ def train(train_data, val_data, label_names,
             label_names=label_names),
         trigger=val_interval)
 
-    log_interval = 10, 'iteration'
+    log_interval = log_iteration, 'iteration'
     trainer.extend(extensions.LogReport(trigger=log_interval))
     trainer.extend(extensions.observe_lr(), trigger=log_interval)
     trainer.extend(extensions.PrintReport(

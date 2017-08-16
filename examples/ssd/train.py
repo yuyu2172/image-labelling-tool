@@ -37,6 +37,9 @@ if __name__ == '__main__':
         '--val_iteration', type=int, default=10000,
         help='The number of iterations between every validation.')
     parser.add_argument(
+        '--log_iteration', type=int, default=10,
+        help='The number of iterations between every logging.')
+    parser.add_argument(
         '--resume',
         help='The path to the trainer snapshot to resume from. '
         'If unspecified, no snapshot will be resumed')
@@ -67,4 +70,5 @@ if __name__ == '__main__':
         args.gpu,
         args.out,
         args.val_iteration,
+        args.log_iteration,
         args.resume)

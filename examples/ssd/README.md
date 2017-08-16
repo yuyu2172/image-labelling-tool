@@ -79,6 +79,10 @@ $ unzip apple_orange_annotations.zip
 $ python train.py --train apple_orange_annotations --label_names apple_orange_annotations/apple_orange_label_names.yml --val_iteration 100 --gpu GPU
 ```
 
+For environments with a less powerful GPU, please reduce computational demand by setting `--batchsize` to a lower value than the default one.
+For those who are worried that nothing appears, please pass `--batchsize 1` and `--log_iteration 1` to the command.
+This will make the script to report log for every image.
+
 ##### Alternatively, fix data used for validation
 [description](https://github.com/yuyu2172/image-labelling-tool/tree/master/examples/ssd#dividing-dataset-into-trainval)
 ```bash

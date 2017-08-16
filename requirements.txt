@@ -5,3 +5,5 @@ flask>=0.10
 jupyter>=1.0
 notebook>=4.2
 widgetsnbextension>=1.2
+pyyaml
+flask

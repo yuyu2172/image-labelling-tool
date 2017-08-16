@@ -97,7 +97,7 @@ $ python train.py --train train --val val --label_names apple_orange_annotations
 ##### Demo code to visualize output
 
 ```bash
-$ python demo.py --pratrained_model result/model_iter_400 --label_names apple_orange_annotations/apple_orange_label_names.yml apple_orange_annotations/Orange/frame0017.jpg
+$ python demo.py --pretrained_model result/model_iter_400 --label_names apple_orange_annotations/apple_orange_label_names.yml apple_orange_annotations/Orange/frame0017.jpg
 ```
 
 Here is a link to a weight trained for 400 iterations.

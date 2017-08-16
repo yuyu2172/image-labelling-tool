@@ -88,7 +88,7 @@ if __name__ == '__main__':
     print('Loaded {0} images'.format(len(labelled_images)))
 
     # Generate image IDs list
-    image_ids = [str(i) for i in xrange(len(labelled_images))]
+    image_ids = [str(i) for i in range(len(labelled_images))]
     # Generate images table mapping image ID to image so we can get an image by ID
     images_table = {image_id: img for image_id, img in zip(image_ids, labelled_images)}
     # Generate image descriptors list to hand over to the labelling tool

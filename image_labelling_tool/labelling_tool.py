@@ -74,7 +74,7 @@ class LabelClass (object):
         self.human_name = human_name
         colour = list(colour)
         if len(colour) != 3:
-            raise TypeError, 'colour must be a tuple or list of length 3'
+            raise TypeError('colour must be a tuple or list of length 3')
         self.colour = colour
 
 
@@ -176,7 +176,7 @@ class ImageLabels (object):
             for model in label['component_models']:
                 self._warp_label(model, xform_fn)
         else:
-            raise TypeError, 'Unknown label type {0}'.format(label_type)
+            raise TypeError('Unknown label type {0}'.format(label_type))
 
     def warp(self, xform_fn):
         """
@@ -257,7 +257,7 @@ class ImageLabels (object):
         elif label_type == 'composite':
             pass
         else:
-            raise TypeError, 'Unknown label type {0}'.format(label_type)
+            raise TypeError('Unknown label type {0}'.format(label_type))
 
         if img is not None:
             # Convert to NumPy array
@@ -305,7 +305,7 @@ class ImageLabels (object):
         elif label_type == 'composite':
             return None
         else:
-            raise TypeError, 'Unknown label type {0}'.format(label_type)
+            raise TypeError('Unknown label type {0}'.format(label_type))
 
 
     def render_labels(self, label_classes, image_shape, pixels_as_vectors=False, fill=True, point_radius=4.0):
@@ -336,11 +336,11 @@ class ImageLabels (object):
                         elif isinstance(c, str)  or  isinstance(c, unicode)  or  c is None:
                             cls_to_index[c] = i
                         else:
-                            raise TypeError, 'Item {0} in label_classes is a list that contains an item that is not a LabelClass or a string but a {1}'.format(i, type(c).__name__)
+                            raise TypeError('Item {0} in label_classes is a list that contains an item that is not a LabelClass or a string but a {1}'.format(i, type(c).__name__))
                 else:
-                    raise TypeError, 'Item {0} in label_classes is not a LabelClass, string or list, but a {1}'.format(i, type(cls).__name__)
+                    raise TypeError('Item {0} in label_classes is not a LabelClass, string or list, but a {1}'.format(i, type(cls).__name__))
         else:
-            raise TypeError, 'label_classes must be a sequence that can contain LabelClass instances, strings or sub-sequences of the former'
+            raise TypeError('label_classes must be a sequence that can contain LabelClass instances, strings or sub-sequences of the former')
 
 
         height, width = image_shape
@@ -397,11 +397,11 @@ class ImageLabels (object):
                         elif isinstance(c, str)  or  isinstance(c, unicode):
                             cls_to_channel[c] = i
                         else:
-                            raise TypeError, 'Item {0} in label_classes is a list that contains an item that is not a LabelClass or a string but a {1}'.format(i, type(c).__name__)
+                            raise TypeError('Item {0} in label_classes is a list that contains an item that is not a LabelClass or a string but a {1}'.format(i, type(c).__name__))
                 else:
-                    raise TypeError, 'Item {0} in label_classes is not a LabelClass, string or list, but a {1}'.format(i, type(cls).__name__)
+                    raise TypeError('Item {0} in label_classes is not a LabelClass, string or list, but a {1}'.format(i, type(cls).__name__))
         else:
-            raise TypeError, 'label_classes must be a sequence that can contain LabelClass instances, strings or sub-sequences of the former'
+            raise TypeError('label_classes must be a sequence that can contain LabelClass instances, strings or sub-sequences of the former')
 
 
         height, width = image_shape
@@ -780,7 +780,7 @@ class PersistentLabelledImage (AbsractLabelledImage):
         elif isinstance(wrapped_labels, list):
             return ImageLabels(wrapped_labels), False
         else:
-            raise TypeError, 'Labels loaded from file must either be a dict or a list, not a {0}'.format(type(wrapped_labels))
+            raise TypeError('Labels loaded from file must either be a dict or a list, not a {0}'.format(type(wrapped_labels)))
 
 
     @staticmethod

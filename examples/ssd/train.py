@@ -40,6 +40,9 @@ if __name__ == '__main__':
         '--log_iteration', type=int, default=10,
         help='The number of iterations between every logging.')
     parser.add_argument(
+        '--loaderjob', type=int, default=4,
+        help='The number of processes to launch for MultiprocessIterator.')
+    parser.add_argument(
         '--resume',
         help='The path to the trainer snapshot to resume from. '
         'If unspecified, no snapshot will be resumed')
@@ -71,4 +74,5 @@ if __name__ == '__main__':
         args.out,
         args.val_iteration,
         args.log_iteration,
+        args.loaderjob,
         args.resume)

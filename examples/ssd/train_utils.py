@@ -101,7 +101,7 @@ class Transform(object):
 def train(train_data, val_data, label_names,
           iteration, lr, step_points,
           batchsize, gpu, out, val_iteration,
-          log_iteration,
+          log_iteration, loaderjob,
           resume):
     """Train SSD
 
@@ -120,11 +120,12 @@ def train(train_data, val_data, label_names,
     train_data = TransformDataset(
         train_data,
         Transform(model.coder, model.insize, model.mean))
-    if batchsize > 1:
-        train_iter = chainer.iterators.MultiprocessIterator(
-            train_data, batchsize)
-    else:
+    if loaderjob <= 0:
         train_iter = chainer.iterators.SerialIterator(train_data, batchsize)
+    else:
+        train_iter = chainer.iterators.MultiprocessIterator(
+            train_data, batchsize, n_processes=min((loaderjob, batchsize)))
+
     val_iter = chainer.iterators.SerialIterator(
         val_data, batchsize, repeat=False, shuffle=False)
 

@@ -83,6 +83,10 @@ For environments with a less powerful GPU, please reduce computational demand by
 For those who are worried that nothing appears, please pass `--batchsize 1` and `--log_iteration 1` to the command.
 This will make the script to report log for every image.
 
+Python's `multiprocessing` works badly with OpenCV in some environments ([dicussion](https://github.com/chainer/chainercv/issues/386#issuecomment-321485827)).
+In that case, please set `--loaderjob 0`.
+This will make the script to use `SerialIterator` instead of `MultiprocessingIterator`.
+
 ##### Alternatively, fix data used for validation
 [description](https://github.com/yuyu2172/image-labelling-tool/tree/master/examples/ssd#dividing-dataset-into-trainval)
 ```bash

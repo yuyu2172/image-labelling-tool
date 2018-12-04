@@ -49,7 +49,7 @@ if __name__ == '__main__':
     with open(args.label_names, 'r') as f:
         label_names = yaml.load(f)
 
-    cmap = plt.get_cmap('spectral')
+    cmap = plt.get_cmap('Spectral')
     colors = [(np.array(cmap(i)[:3]) * 255).astype(np.int32).tolist()
               for i in range(1, len(label_names) + 1)]
     label_classes = [labelling_tool.LabelClass(name, name, color)

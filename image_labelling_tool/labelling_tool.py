@@ -166,7 +166,7 @@ class ImageLabels (object):
             polygon = [[v['x'], v['y']] for v in vertices]
             polygon = xform_fn(np.array(polygon))
             transformed_verts = [{'x': polygon[i, 0], 'y': polygon[i, 1]}
-                                 for i in xrange(len(polygon))]
+                                 for i in range(len(polygon))]
             label['vertices'] = transformed_verts
         elif label_type == 'composite':
             # Nothing to do
@@ -487,7 +487,7 @@ class ImageLabels (object):
         if not isinstance(label_classes, list):
             label_classes = [label_classes] * len(list_of_contours)
         for contour, lcls in zip(list_of_contours, label_classes):
-            vertices = [{'x': contour[i][1], 'y': contour[i][0]}   for i in xrange(contour.shape[0])]
+            vertices = [{'x': contour[i][1], 'y': contour[i][0]}   for i in range(contour.shape[0])]
             label = {
                 'label_type': 'polygon',
                 'label_class': lcls,
@@ -508,7 +508,7 @@ class ImageLabels (object):
         :return: an `ImageLabels` instance containing the labels extracted from the label mask image
         """
         contours = []
-        for i in xrange(1, labels.max()+1):
+        for i in range(1, labels.max()+1):
             lmask = labels == i
 
             if lmask.sum() > 0:
